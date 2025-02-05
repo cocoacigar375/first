@@ -3,6 +3,9 @@ from app.models import db, Memo
 from dotenv import load_dotenv
 import os
 from uuid import UUID
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, SubmitField
+from wtforms.validators import DataRequired
 
 # .envファイルを読み込む
 load_dotenv()
@@ -34,8 +37,18 @@ def index():
 
 #ログイン画面
 @app.route('/')
-def display_login():
-    return render_template('login.html')
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
+        # ここでユーザー認証を行います
+        if username == 'admin' and password == 'password':  # 仮の認証
+            flash('Login successful!', 'success')
+            return redirect(url_for('index'))
+        else:
+            flash('Invalid username or password', 'danger')
+    return render_template('login.html', form=form)
 #メニュー画面
 @app.route('/menu')
 def display_menu():
@@ -43,7 +56,7 @@ def display_menu():
 #情報入力画面
 @app.route('/add')
 def display_add():
-    #
+    #ログインの
     return render_template('add.html')
 #店舗追加成功画面
 @app.route('/add/success')
