@@ -32,6 +32,20 @@ def index():
     memos = Memo.query.order_by(Memo.created_at.desc()).all()
     return render_template('index.html', memos=memos)
 
+#ログイン画面
+@app.route('/')
+#メニュー画面
+@app.route('/menu')
+#情報入力画面
+@app.route('/add')
+#店舗追加成功画面
+@app.route('/add/success')
+#店舗追加失敗画面
+@app.route('/add/failure')
+#店舗表示画面
+@app.route('/stores')
+
+
 # メモの詳細を表示
 @app.route('/memo/<uuid:memo_id>')
 def view_memo(memo_id):
