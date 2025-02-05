@@ -29,12 +29,6 @@ db.init_app(app)
 def create_tables():
     db.create_all()
 
-# メモ一覧を表示
-@app.route('/')
-def index():
-    memos = Memo.query.order_by(Memo.created_at.desc()).all()
-    return render_template('index.html', memos=memos)
-
 #ログイン画面
 @app.route('/')
 def login():
@@ -53,54 +47,29 @@ def login():
 @app.route('/menu')
 def display_menu():
     return render_template('menu.html')
+
 #情報入力画面
 @app.route('/add')
 def display_add():
-    #ログインの
+    #情報入力フォーム作る
+    #情報保存
     return render_template('add.html')
+
 #店舗追加成功画面
 @app.route('/add/success')
 def display_success():
     return render_template('success.html')
+
 #店舗追加失敗画面
 @app.route('/add/failure')
 def display_failure():
     return render_template('failure.html')
+
 #店舗表示画面
 @app.route('/stores')
 def display_stores():
     memos = Memo.query.order_by(Memo.created_at.desc()).all()
     return render_template('stores.html', memos=memos)
-
-
-# メモの詳細を表示
-@app.route('/memo/<uuid:memo_id>')
-def view_memo(memo_id):
-    memo = Memo.query.get_or_404(str(memo_id))
-    return render_template('view_memo.html', memo=memo)
-
-# 新しいメモの作成フォームを表示
-@app.route('/create', methods=['GET'])
-def show_create_memo():
-    return render_template('create_memo.html')
-
-# 新しいメモを作成
-@app.route('/create', methods=['POST'])
-def create_memo():
-    title = request.form['title']
-    content = request.form['content']
-    new_memo = Memo(title=title, content=content)
-    db.session.add(new_memo)
-    db.session.commit()
-    return redirect(url_for('index'))
-
-# メモを削除
-# ===============================
-# エンドポイント /memo/(メモのID)/delete
-# メソッド　　POST
-# 返すもの　index.html (リダイレクト)
-# ===============================
-
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

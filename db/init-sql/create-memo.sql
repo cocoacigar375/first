@@ -1,15 +1,16 @@
 -- テーブル作成
-CREATE TABLE IF NOT EXISTS Memo (
+
+CREATE TABLE IF NOT EXISTS Store (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    title VARCHAR(100) NOT NULL,
-    content TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    store_name VARCHAR(100) NOT NULL,
+    address VARCHAR(200) NOT NULL,
+    phone_number VARCHAR(20) NOT NULL,
+    opening_times VARCHAR(100) NOT NULL,
+    remarks TEXT
 );
 
--- ダミーデータ挿入
-INSERT INTO Memo (id, title, content, created_at, updated_at) VALUES
-('3b4b60c6-3a90-48c9-b8ed-4df5d1231231', 'グループワーク 最終確認', '経済学入門チーム全員の役割を確認し、成果物をまとめる。1月25日 18時締め切り', '2025-01-03 12:40:47.397887', '2025-01-03 12:40:47.397887'),
-('4a2b8e87-2c34-490e-80f7-123b456c7890', 'レポート提出 構想作成', '文学概論指定テーマに基づいてA4用紙2枚分の構想を記載。1月20日 12時締め切り', '2025-01-03 12:41:24.679379', '2025-01-03 12:41:24.679379'),
-('d5f3ac91-9f64-4b82-b27a-c7d1b3cd5678', '期末試験 勉強計画作成', '数学I試験範囲は三角関数と微分積分。復習用ノート作成。1月15日 23時締め切り', '2025-01-03 12:41:34.872312', '2025-01-03 12:41:34.872312'),
-('6f894bd3-c987-485c-933a-a45b9c123456', 'プログラミング課題 コードレビュー', '情報科学基礎自分のコードを整理し、指定フォーマットで提出。改善点のコメントを含めること。1月28日 20時締め切り', '2025-01-03 12:41:57.507', '2025-01-03 12:41:57.507');
+INSERT INTO Store (id, store_name, address, phone_number, opening_times, remarks) VALUES
+('dfd7862a-9bab-ff0f-beac-b8a1d00a4b40', 'ガスゼリヤ御堂筋店', '大阪府大阪市中央区南船場3-100-100','123-4567-8901', '7:00~23:00', '乗用車での入店はお控えください。'),
+('bb361297-10a2-c818-8fc1-c0d8347993ac', 'ガスゼリヤ萩島店' ,'萩島中区0-0-0', '000-0000-0000', '11:00~20:00', 'アルバイト募集中です'),
+('7f69e3f3-d3c5-6f20-8f8b-a23396509d47', 'ガスゼリヤ都市大横浜キャンパス店', '神奈川県横浜市都筑区牛久保西3-3-1' ,'234-5678-9012', '8:00~22:00', '教科書の取り扱いを行っております'), 
+('73a2cb55-170c-6c84-7d76-22efae89e077', 'ガスゼリヤ都市大世田谷キャンパス店', '東京都世田谷区玉堤1-28-1', '345-6789-0123', '8:00~22:00', '教科書の取り扱いを行っております');
