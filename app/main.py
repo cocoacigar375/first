@@ -34,16 +34,30 @@ def index():
 
 #ログイン画面
 @app.route('/')
+def display_login():
+    return render_template('login.html')
 #メニュー画面
 @app.route('/menu')
+def display_menu():
+    return render_template('menu.html')
 #情報入力画面
 @app.route('/add')
+def display_add():
+    #
+    return render_template('add.html')
 #店舗追加成功画面
 @app.route('/add/success')
+def display_success():
+    return render_template('success.html')
 #店舗追加失敗画面
 @app.route('/add/failure')
+def display_failure():
+    return render_template('failure.html')
 #店舗表示画面
 @app.route('/stores')
+def display_stores():
+    memos = Memo.query.order_by(Memo.created_at.desc()).all()
+    return render_template('stores.html', memos=memos)
 
 
 # メモの詳細を表示
