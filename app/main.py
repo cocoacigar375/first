@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from app.model import db, Store
 from dotenv import load_dotenv # type: ignore
 import os
+import psycopg2
 from uuid import UUID
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
@@ -29,6 +30,17 @@ db.init_app(app)
 @app.before_request
 def create_tables():
     db.create_all()
+    # 既にデータがある場合はスキップ
+    if not Store.query.first():
+        initial_stores = [
+            Store(id="dfd7862a-9bab-ff0f-beac-b8a1d00a4b40", store_name="ガスゼリヤ御堂筋店", address="大阪府大阪市中央区南船場3-100-100", phone_number="123-4567-8901", opening_times="7:00~23:00", remarks="乗用車での入店はお控えください。"),
+            Store(id="bb361297-10a2-c818-8fc1-c0d8347993ac", store_name="ガスゼリヤ萩島店", address="萩島中区0-0-0", phone_number="000-0000-0000", opening_times="11:00~20:00", remarks="アルバイト募集中です"),
+            Store(id="7f69e3f3-d3c5-6f20-8f8b-a23396509d47", store_name="ガスゼリヤ都市大横浜キャンパス店", address="神奈川県横浜市都筑区牛久保西3-3-1", phone_number="234-5678-9012", opening_times="8:00~22:00", remarks="教科書の取り扱いを行っております"),
+            Store(id="73a2cb55-170c-6c84-7d76-22efae89e077", store_name="ガスゼリヤ都市大世田谷キャンパス店", address="東京都世田谷区玉堤1-28-1", phone_number="345-6789-0123", opening_times="8:00~22:00"),
+        ]
+        db.session.bulk_save_objects(initial_stores)
+        db.session.commit()
+
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
