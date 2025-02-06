@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
-from model import db, Store
+from app.model import db, Store
 from dotenv import load_dotenv
 import os
 from uuid import UUID
