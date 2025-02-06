@@ -12,22 +12,31 @@
     <div id="index" class="container">
         <h1>店舗一覧表示</h1>
 
-        <div class="memos">
-            <h2 class="title-border">メモった課題</h2>
+        <a href="{{ url_for('logout') }}" class="button">
+            <i class="fas fa-sign-out-alt"></i> ログアウト
+        </a>
 
-            {% if not memos %}
-                <p>まだメモがありません。</p>
+        <div class="stores">
+            {% if not stores %}
+                <p>まだ店舗が登録されていません。</p>
             {% endif %}
- 
+
             <ul>
-                {% for memo in memos %}
+                {% for store in stores %}
                 <li class="card">
-                    <a href="{{ url_for('view_memo', memo_id=memo.id) }}">{{ memo.title }}</a>
-                    <p class="small">作成日: {{ memo.created_at.strftime('%Y年 %m月 %d日 %H:%M') }}</p>
+                    <h2>{{ store.storename }}</h2>
+                    <p>住所: {{ store.address }}</p>
+                    <p>電話番号: {{ store.phone_number }}</p>
+                    <p>営業時間: {{ store.opening_times }}</p>
+                    <p>備考: {{ store.remarks }}</p>
                 </li>
                 {% endfor %}
             </ul>
         </div>
+
+        <a href="{{ url_for('logout') }}" class="button">
+            <i class="fas fa-sign-out-alt"></i> ログアウト
+        </a>
     </div>
 </body>
 </html>
