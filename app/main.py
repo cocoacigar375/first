@@ -36,7 +36,7 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Login')
 
 class StoreForm(FlaskForm):
-    storename = StringField('店舗名', validators=[DataRequired()])
+    store_name = StringField('店舗名', validators=[DataRequired()])
     address = StringField('住所', validators=[DataRequired()])
     phone_number = StringField('電話番号', validators=[DataRequired()])
     opening_times = StringField('営業時間', validators=[DataRequired()])
@@ -70,7 +70,7 @@ def display_add():
     if form.validate_on_submit():
         try:
             new_store = Store(
-                storename=form.storename.data,
+                store_name=form.store_name.data,
                 address=form.address.data,
                 phone_number=form.phone_number.data,
                 opening_times=form.opening_times.data,
