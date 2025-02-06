@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from app.model import db, Store
-from dotenv import load_dotenv
+from dotenv import load_dotenv # type: ignore
 import os
 from uuid import UUID
 from flask_wtf import FlaskForm
