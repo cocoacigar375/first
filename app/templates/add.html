@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
 </head>
 <body>
-    <div id="add-store" class="container">
+    <div id="index" class="container">
         <h1>新規店舗追加</h1>
 
         <form method="POST" action="{{ url_for('display_add') }}">
@@ -41,6 +41,10 @@
 
         <a href="{{ url_for('logout') }}" class="button">
             <i class="fas fa-sign-out-alt"></i> ログアウト
+        </a>
+        <!-- /menu への戻るボタン -->
+        <a href="{{ url_for('display_menu') }}" class="button">
+            <i class="fas fa-arrow-left"></i> メニューに戻る
         </a>
     </div>
 </body>
