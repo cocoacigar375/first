@@ -1,8 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, session
 from app.model import db, Store
 from dotenv import load_dotenv # type: ignore
 import os
-from uuid import UUID
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired
@@ -26,7 +25,7 @@ app.config['SECRET_KEY'] = 'your_secret_key'
 
 db.init_app(app)
 
-@app.before_request
+@app.before_first_request
 def create_tables():
     db.create_all()
 
@@ -52,6 +51,7 @@ def login():
         password = form.password.data
         # ここでユーザー認証を行います
         if username == 'admin' and password == 'password':  # 仮の認証
+            session['logged_in'] = True
             flash('Login successful!', 'success')
             return redirect(url_for('display_menu'))
         else:
@@ -61,11 +61,15 @@ def login():
 # メニュー画面
 @app.route('/menu')
 def display_menu():
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
     return render_template('menu.html')
 
 # 情報入力画面
 @app.route('/add', methods=['GET', 'POST'])
 def display_add():
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
     form = StoreForm()
     if form.validate_on_submit():
         try:
@@ -89,22 +93,30 @@ def display_add():
 # 店舗追加成功画面
 @app.route('/add/success')
 def display_success():
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
     return render_template('success.html')
 
 # 店舗追加失敗画面
 @app.route('/add/failure')
 def display_failure():
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
     return render_template('failure.html')
 
 # 店舗表示画面
 @app.route('/stores')
 def display_stores():
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
     stores = Store.query.order_by(Store.storename).all()
     return render_template('stores.html', stores=stores)
 
 # ログアウト
 @app.route('/logout')
 def logout():
+    session.pop('logged_in', None)
+    flash('You have been logged out.', 'success')
     return redirect(url_for('login'))
 
 if __name__ == '__main__':
