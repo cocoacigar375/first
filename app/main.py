@@ -99,7 +99,7 @@ def display_failure():
 # 店舗表示画面
 @app.route('/stores')
 def display_stores():
-    stores = Store.query.order_by(Store.storename).all()
+    stores = Store.query.order_by(Store.store_name).all()
     return render_template('stores.html', stores=stores)
 
 # ログアウト
