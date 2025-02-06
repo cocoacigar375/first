@@ -9,7 +9,7 @@ class Store(db.Model):
     address = db.Column(db.String(200), nullable=False)
     phone_number = db.Column(db.String(20), nullable=False)
     opening_times = db.Column(db.String(100), nullable=False)
-    remarks = db.Column(db.Text, nullable=True)
+    remarks = db.Column(db.String(1000))
 
 # 店の情報の項目を決めたい
 # id、店名、住所、電話番号、営業時間、備考
